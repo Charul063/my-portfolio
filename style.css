@@ -1,0 +1,8 @@
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #6C63FF; /* Accent color */
+  margin-bottom: 20px;
+}
