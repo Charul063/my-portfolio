@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Charul Chhipa – Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Light theme (Lavender + Mint + Light Gray) */
+      --bg: #faf8fc;          /* page background */
+      --surface: #ffffff;     /* cards */
+      --text: #111827;        /* primary text */
+      --muted: #6b7280;       /* secondary text */
+      --primary: #6d5ef6;     /* lavender/indigo */
+      --primary-2: #64d6c2;   /* mint */
+      --accent: #f59e0b1a;    /* subtle accent bg */
+      --ring: #c7d2fe;        /* focus ring */
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+      --radius: 16px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #070d22;
+        --surface: #152446;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --primary: #8b7bff;
+        --primary-2: #65d6c2;
+        --accent: #ffffff08;
+        --ring: #312e81;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: linear-gradient(90deg, var(--surface), var(--surface));
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      backdrop-filter: saturate(180%) blur(8px);
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { font-weight: 700; letter-spacing: 0.2px; }
+    .menu { display: flex; gap: 22px; align-items: center; }
+    .menu a { text-decoration: none; color: var(--muted); font-weight: 500; }
+    .menu a:hover, .menu a.active { color: var(--primary); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border-radius: 999px; border: 1px solid transparent; background: var(--primary); color: #fff; text-decoration: none; box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(109,94,246,.35); }
+    .btn.secondary { background: linear-gradient(90deg, var(--primary-2), #9ae6d8); color: #0b1020; }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 40px;
+      background: radial-gradient(1200px 600px at 20% -20%, rgba(109,94,246,0.15), transparent 50%),
+                  radial-gradient(900px 500px at 100% 0%, rgba(100,214,194,0.15), transparent 60%);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 32px; align-items: center; }
+    .kicker { color: var(--primary-2); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; font-size: 12px; }
+    .title { font-size: clamp(28px, 5vw, 48px); line-height: 1.15; margin: 10px 0 12px; }
+    .subtitle { color: var(--muted); margin-bottom: 22px; }
+    .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .avatar {
+      width: 240px; height: 240px; border-radius: 24px; overflow: hidden; box-shadow: var(--shadow); border: 6px solid var(--surface);
+      transform: rotate(1deg); transition: transform .3s ease;
+    }
+    .avatar:hover { transform: rotate(0deg) scale(1.02); }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Sections */
+    section { padding: 64px 0; }
+    h2 { font-size: clamp(22px, 3.2vw, 32px); margin: 0 0 8px; }
+    .section-sub { color: var(--muted); margin-bottom: 28px; }
+
+    /* Cards & grids */
+    .grid { display: grid; gap: 18px; }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px; transition: transform .2s ease, box-shadow .2s ease; border: 1px solid rgba(0,0,0,0.04); }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 16px 44px rgba(17,24,39,.12); }
+
+    /* About */
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .about .bullet { display: flex; gap: 10px; align-items: flex-start; }
+    .about .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--primary); margin-top: 8px; box-shadow: 0 0 0 4px var(--accent); }
+
+    /* Skills */
+    .skill { display: grid; grid-template-columns: 140px 1fr; align-items: center; gap: 14px; }
+    .bar { height: 10px; background: #e5e7eb; border-radius: 999px; position: relative; overflow: hidden; }
+    .bar > span { position: absolute; inset: 0; width: var(--w); background: linear-gradient(90deg, var(--primary), var(--primary-2)); border-radius: 999px; transform: scaleX(0); transform-origin: left; animation: fill 1.1s ease forwards; }
+    @keyframes fill { to { transform: scaleX(1);} }
+
+    /* Projects */
+    .project img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; }
+    .tag { display: inline-block; background: var(--accent); color: var(--primary); padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+    .actions { display: flex; gap: 10px; margin-top: 8px; }
+    .ghost { background: transparent; color: var(--primary); border: 1px solid var(--primary); }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before { content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(var(--primary), var(--primary-2)); border-radius: 999px; }
+    .tl-item { position: relative; margin: 12px 0; padding-left: 18px; }
+    .tl-item::before { content: ""; position: absolute; left: -2px; top: 6px; width: 10px; height: 10px; background: var(--surface); border: 3px solid var(--primary); border-radius: 50%; box-shadow: var(--shadow); }
+
+    /* Contact */
+    form { display: grid; gap: 12px; }
+    input, textarea { width: 100%; border: 1px solid #e5e7eb; background: var(--surface); color: var(--text); padding: 12px 14px; border-radius: 12px; outline: none; }
+    input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--ring); }
+    textarea { min-height: 120px; resize: vertical; }
+
+    /* Footer */
+    footer { padding: 28px 0 60px; color: var(--muted); }
+    .social { display: flex; gap: 12px; }
+    .social a { color: var(--muted); text-decoration: none; border: 1px solid rgba(0,0,0,0.08); padding: 8px 12px; border-radius: 999px; }
+    .social a:hover { color: var(--primary); border-color: var(--primary); }
+
+    /* Utilities */
+    .sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .hero-grid, .about, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+      .avatar { width: 180px; height: 180px; margin: 0 auto; }
+      .menu { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">Charul<span style="color:var(--primary)">Chhipa</span></div>
+      <nav class="menu" aria-label="Primary">
+
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#timeline">Education</a>
+        <a href="#contact">Contact</a>
+        <a class="btn small" href="Charul Chhipa 8.pdf" download>Download Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+
+      <div>
+        <span class="kicker">Full‑Stack Developer • MERN</span>
+        <h1 class="title">Hi, I'm <span style="color:var(--primary)">Charul Chhipa</span> — I build delightful, responsive web apps.</h1>
+        <p class="subtitle">B.Tech 2026 • Jaipur • Open to SDE Internships & Freelance. Passionate about clean UI, accessible UX, and scalable systems.</p>
+        <div class="cta">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="btn secondary" href="#contact">Contact Me</a>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:center;">
+        <div class="avatar" aria-hidden="true">
+          <img src="image1.jpg" alt="Profile" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container about">
+      <div>
+        <h2>About Me</h2>
+        <p class="section-sub">Curious developer with a strong foundation in HTML, CSS, JavaScript and a growing love for React, Node and MongoDB.</p>
+        <div class="bullet"><span class="dot"></span><p>Currently building <strong>CampusMate</strong> to streamline campus placements and student collaboration. "Your Placement Prep Partner"</p></div>
+        <div class="bullet"><span class="dot" style="background:var(--primary-2)"></span><p>Comfortable with responsive design, accessibility and component‑driven UIs.</p></div>
+        <div class="bullet"><span class="dot" style="background:linear-gradient(90deg,var(--primary),var(--primary-2))"></span><p>Love solving DSA medium to hard level problems to sharpen problem‑solving.</p></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">Quick Facts</h3>
+        <ul style="margin:0; padding-left:18px; color:var(--muted)">
+          <li>Location: Jaipur, India</li>
+          <li>Degree: B.Tech (2026)</li>
+          <li>Looking for: SDE Intern / Frontend roles</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <h2>Skills</h2>
+      <p class="section-sub">Comfort across the stack with a frontend focus.</p>
+      <div class="grid grid-2">
+        <div class="card skill"><div>HTML</div><div class="bar"><span style="--w: 100%"></span></div></div>
+        <div class="card skill"><div>CSS</div><div class="bar"><span style="--w: 100%"></span></div></div>
+        <div class="card skill"><div>JavaScript</div><div class="bar"><span style="--w: 80%"></span></div></div>
+        <div class="card skill"><div>React</div><div class="bar"><span style="--w:10%"></span></div></div>
+        <div class="card skill"><div>Node.js</div><div class="bar"><span style="--w:10%"></span></div></div>
+        <div class="card skill"><div>MongoDB</div><div class="bar"><span style="--w: 10%"></span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <h2>Projects</h2>
+      <p class="section-sub">A few things I’ve built recently.</p>
+      <div class="grid grid-3">
+        <article class="card project">
+          <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop" alt="Project screenshot" />
+          <h3>CampusMate</h3>
+          <p class="section-sub">Placement tracker & collaboration platform for students.</p>
+          <span class="tag">MERN</span>
+          <div class="actions">
+            <a class="btn" href="#" target="_blank" rel="noopener">Live Demo</a>
+            <a class="btn ghost" href="https://github.com/yourname/campusmate" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+        <article class="card project">
+          <img src="https://images.unsplash.com/photo-1526476148966-98bd039463ea?q=80&w=800&auto=format&fit=crop" alt="Project screenshot" />
+          <h3>Portfolio</h3>
+          <p class="section-sub">This website—hand‑crafted with advanced CSS transitions & grid.</p>
+          <span class="tag">HTML/CSS/JS</span>
+          <div class="actions">
+            <a class="btn" href="#" target="_blank" rel="noopener">Live Demo</a>
+            <a class="btn ghost" href="https://github.com/yourname/portfolio" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+        <article class="card project">
+          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=800&auto=format&fit=crop" alt="Project screenshot" />
+          <h3>DSA Playgrounds</h3>
+          <p class="section-sub">Interactive visualizations of classic array algorithms.</p>
+          <span class="tag">JS • Algorithms</span>
+          <div class="actions">
+            <a class="btn" href="#" target="_blank" rel="noopener">Live Demo</a>
+            <a class="btn ghost" href="https://github.com/yourname/dsa-playgrounds" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education / Timeline -->
+  <section id="timeline">
+    <div class="container">
+      <h2>Education</h2>
+      <div class="card timeline">
+        <div class="tl-item">
+          <h4>B.Tech in Computer Science • 2022–2026</h4>
+          <p class="section-sub">JECRC University, Jaipur – CGPA: 8.84 (till 6th sem)</p>
+        </div>
+        <div class="tl-item">
+          <h4>Core Subjects</h4>
+          <p class="section-sub">DSA, Operating Systems, DBMS, Computer Networks, Web Development</p>
+        </div>
+        <div class="tl-item">
+          <h4>Achievements</h4>
+          <p class="section-sub">Solved 300+ DSA problems</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p class="section-sub">Let’s collaborate! I’m open to internships, freelance work, or just a friendly chat.</p>
+      <div class="grid grid-2">
+        <div class="card">
+          <form id="contactForm" novalidate>
+            <label class="sr" for="name">Name</label>
+            <input id="name" name="name" placeholder="Your name" required />
+            <label class="sr" for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="your@email.com" required />
+            <label class="sr" for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell me about your project…" required></textarea>
+            <button class="btn" type="submit">Send Message</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>Find me</h3>
+          <p class="section-sub" style="margin-top:6px">Drop a mail or say hi on socials.</p>
+          <div class="social">
+            <a href="mailto:charulchhipa028@gmail.com">Email</a>
+            <a href="https://github.com/Charul063" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://linkedin.com/in/charulchhipa01" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+      <div>© <span id="year"></span> Charul Chhipa. All rights reserved.</div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a class="btn ghost" href="#top">Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Highlight active menu link on scroll
+    const sections = ['about','skills','projects','timeline','contact'].map(id => document.getElementById(id));
+    const menuLinks = Array.from(document.querySelectorAll('.menu a')).filter(a => a.getAttribute('href').startsWith('#'));
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          menuLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${entry.target.id}`));
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+    sections.forEach(sec => sec && io.observe(sec));
+
+    // Simple contact form guard (client-side)
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      if (!name || !email || !msg) {
+        alert('Please complete all fields.');
+        return;
+      }
+      alert('Thanks! Your message has been prepared. Connect via email for a real submission.');
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
